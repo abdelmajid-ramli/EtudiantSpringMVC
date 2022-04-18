@@ -26,7 +26,9 @@ public class AppUserDetailsService implements UserDetailsService{
 		/*List<GrantedAuthority> list=new ArrayList<>();
 		list.add(new SimpleGrantedAuthority("ADMIN"));
 		User user =new User(username, username, list);*/
-		return new AppUserDetails(appUser);
+		AppUserDetails appUserDetails=new AppUserDetails(appUser);
+		System.out.println(appUserDetails.getUsername()+" -- "+appUserDetails.getPassword()+"  "+appUserDetails.getAuthorities().toString());
+		return appUserDetails;
 	}
 
 }

@@ -22,13 +22,13 @@ public class EtudiantController {
 	private EtudiantRepository etudiantRepository;
 	
 	
-    @GetMapping( "/user")
+    @GetMapping(path="/user")
     @ResponseBody
     public String user(){
         return "user hii";
     }
     
-    @GetMapping( "/admin")
+    @GetMapping(path="/admin")
     @ResponseBody
     public String admin(){
         return "admin hii";

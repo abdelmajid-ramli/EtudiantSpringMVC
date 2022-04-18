@@ -24,10 +24,7 @@ public class AppUserDetails implements UserDetails {
 		for(AppRole role:user.getAppRoles()) {
 			authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
 		}
-		
-		for(GrantedAuthority auth:authorities) {
-			System.out.println(auth);
-		}
+		//authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
