@@ -26,6 +26,8 @@ public class EtudiantMvcApplication {
 		System.out.println("hii");
 	}
 	
+	
+	
 	//@Bean
 	public CommandLineRunner cmdRunner(EtudiantRepository etudiantRep) {
 		return args -> {

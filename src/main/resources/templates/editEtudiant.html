@@ -10,7 +10,7 @@
 <body>
 <div layout:fragment="content1">
 <div class="container">
-<form th:action="@{/save(page=${page},keyword=${keyword})}" method="post">
+<form th:action="@{/admin/save(page=${page},keyword=${keyword})}" method="post">
 	<div>
 		<label>ID</label>
 		<label th:text="${etudiant.id}"></label>

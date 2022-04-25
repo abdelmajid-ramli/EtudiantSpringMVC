@@ -42,11 +42,16 @@ public class EtudiantController {
     public String home(){
         return "home";
     }
+    
+    @GetMapping( "/403")
+    public String error(){
+        return "403";
+    }
 	
-	@GetMapping(path="/etudiants")
+	@GetMapping(path="/user/etudiants")
 	public String patients(Model model,
 						   @RequestParam(name = "page",defaultValue = "0") int page,
-						   @RequestParam(name = "size",defaultValue = "5") int size,
+						   @RequestParam(name = "size",defaultValue = "6") int size,
 						   @RequestParam(name = "keyword",defaultValue = "") String keyword) {
 		Page<Etudiant> etudiantsPage=etudiantRepository.findByNomContains(keyword,PageRequest.of(page, size));
 		model.addAttribute("listEtudiants",etudiantsPage.getContent());
@@ -56,7 +61,7 @@ public class EtudiantController {
 		return "etudiants";
 	}
 	
-	@GetMapping(path="/formEtudiant")
+	@GetMapping(path="/admin/formEtudiant")
 	public String formEtudiant(Model model) {
 		
 		model.addAttribute("etudiant",new Etudiant());
@@ -64,7 +69,7 @@ public class EtudiantController {
 		return "formEtudiant";
 	}
 	
-	@PostMapping(path="/save")
+	@PostMapping(path="/admin/save")
 	public String save(Model model, Etudiant etudiant, BindingResult bindingResult,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "") String keyword) {
 		
 		if(bindingResult.hasErrors()) {
@@ -72,10 +77,10 @@ public class EtudiantController {
 		}
 		etudiantRepository.save(etudiant);
 		
-		return "redirect:/etudiants?page="+page+"&keyword="+keyword;
+		return "redirect:/user/etudiants?page="+page+"&keyword="+keyword;
 	}
 	
-	@GetMapping(path="/editEtudiant")
+	@GetMapping(path="/admin/editEtudiant")
 	public String editPatient(Model model,Long id,int page,String keyword) {
 		Etudiant etudiant=etudiantRepository.findById(id).orElse(null);
 		if(etudiant==null) {
@@ -88,12 +93,25 @@ public class EtudiantController {
 		return "editEtudiant";
 	}
 	
-	@GetMapping(path="/delete")
+	@GetMapping(path="/user/showEtudiant")
+	public String showPatient(Model model,Long id,int page,String keyword) {
+		Etudiant etudiant=etudiantRepository.findById(id).orElse(null);
+		if(etudiant==null) {
+		throw new RuntimeException("etudiant n'existe pas");
+		}
+		model.addAttribute("etudiant",etudiant);
+		model.addAttribute("page",page);
+		model.addAttribute("keyword",keyword);
+		
+		return "showEtudiant";
+	}
+	
+	@GetMapping(path="/admin/delete")
 	public String deletePatient(Model model,@RequestParam(name = "id",defaultValue = "0") Long id,
 			   				@RequestParam(name = "page",defaultValue = "0") int page,
 			   				@RequestParam(name = "keyword",defaultValue = "")String keyword) {
 		etudiantRepository.deleteById(id);
-		return "redirect:/etudiants?page="+page+"&keyword="+keyword;
+		return "redirect:/user/etudiants?page="+page+"&keyword="+keyword;
 	}
 
 }
